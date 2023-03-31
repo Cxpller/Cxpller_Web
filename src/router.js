@@ -9,18 +9,19 @@ routes.push(
   },
   {
     path: "/",
-    component: () => import("~/views/common/index.vue"),
+    component: () => import("~/views/home/index.vue"),
   }
 );
- 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_FILE_NAME),
   routes,
 });
 
 console.log(routes);
+
 router.beforeEach((to, from, next) => {
-  console.log(to,'to');
+  next();
 });
 
 export default router;
