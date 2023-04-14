@@ -1,7 +1,7 @@
 <template>
   <!-- 顶部导航栏 -->
   <nav class="nav" v-show="navShow">
-    <div class=" nav_icon" @click="home">
+    <div class="nav_icon" @click="router.push('/')">
       <img src="/icon.png" alt="">
       <div>Cxpller</div>
     </div>
@@ -9,6 +9,9 @@
       <div v-for="item in navItem" class="nav_item" @click="jump(item)">
         {{ item.name }}
       </div>
+      <el-switch v-model="theme" @change="themeChange"
+        style="--el-switch-on-color: #0B0B0C; --el-switch-off-color: #cdcdcd" inline-prompt :active-icon="Dark"
+        :inactive-icon="Light" />
     </div>
   </nav>
   <!-- <div :style="{ height: navAbsolute ? '56px' : '' }"></div> -->
@@ -19,6 +22,9 @@
 import { reactive, ref, watch } from "vue";
 import { userStore } from '~/store';
 import { useRoute, useRouter } from 'vue-router';
+import Light from './components/icon/light.vue'
+import Dark from './components/icon/dark.vue'
+
 import './style/global.less'
 
 const route = useRoute();
@@ -26,7 +32,7 @@ const router = useRouter();
 
 const navItem = reactive({
   home: {
-    name: '首页', value: 'home'
+    name: '首页', value: ''
   },
   blog: {
     name: '博客', value: 'blog'
@@ -63,10 +69,17 @@ const showNav = e => {
   // let absStr = userStore().data.navAbsolute.indexOf(e);
   // navAbsolute.value = absStr == -1;
 };
+
+// 主题色控制
+const theme = ref(false)
+const themeChange = () => {
+  console.log(theme.value);
+}
 </script>
 
 <style lang="less">
 @import "./style/global.less";
+@import "./style/theme.less";
 
 body {
   margin: 0;
@@ -108,6 +121,7 @@ body {
 
     .nav_view {
       display: flex;
+      align-items: center;
 
       .nav_item {
         font-size: 14px;
